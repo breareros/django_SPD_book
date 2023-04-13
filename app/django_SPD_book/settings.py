@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from dotenv import dotenv_values
+
 env = dotenv_values('.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'store',
+    'store.apps.StoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': env.get('NAME'),
+    #     'USER': env.get('USER'),
+    #     'PASSWORD': env.get('PASSWORD'),
+    #     'HOST': env.get('HOST'),
+    #     'PORT': env.get('PORT'),
+    #     'OPTIONS': {
+    #         'sql_mode': 'STRICT_TRANS_TABLES'
+    #     },
+    # }
 }
 
 
