@@ -10,3 +10,5 @@ urlpatterns = [
 ]
 
 urlpatterns += router.urls
+
+# browser URL /store/book/?format=json
