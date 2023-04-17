@@ -14,3 +14,7 @@ class BookViewSet(ModelViewSet):
     filterset_fields = ['id', 'price']  # Не как в видео! Другая версия Django
     search_fields = ['name', 'author_name']
     ordering_fields = ['price', 'author_name']
+
+class BookGPViewSet(BookViewSet):
+    queryset = Book.objects.filter(author_name='Джоан Кэтлин Роулинг')
+    ordering_fields = ['price', 'name']
