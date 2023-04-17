@@ -1,4 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 
@@ -18,3 +19,4 @@ class BookViewSet(ModelViewSet):
 class BookGPViewSet(BookViewSet):
     queryset = Book.objects.filter(author_name='Джоан Кэтлин Роулинг')
     ordering_fields = ['price', 'name']
+    permission_classes = [IsAuthenticatedOrReadOnly]
