@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import dotenv_values
 
 env = dotenv_values('.env')
+print(f"{env=}")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -146,5 +147,34 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
-    )
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
 }
+
+# LDAP
+AUTH_LDAP_SERVER_URI = "ldap://10.101.1.6:389"
+AUTH_LDAP_BIND_DN = "cn=admin,dc=uzags72,dc=local"
+AUTH_LDAP_BIND_PASSWORD = "truefalse"
+
+import ldap
+from django_auth_ldap.config import LDAPSearch
+AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=P7200000,dc=uzags72,dc=local",
+                                   ldap.SCOPE_SUBTREE,
+                                   "(uid=%(user)s)")
+
+AUTH_LDAP_USER_ATTR_MAP = {
+    "username": "uid",
+    # "first_name": "givenName",
+    "last_name": "displayName",
+    "email": "mail"
+}
+
+AUTHENTICATION_BACKENDS = (
+    "django_auth_ldap.backend.LDAPBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/api/book/'

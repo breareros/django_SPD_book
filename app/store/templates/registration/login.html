@@ -1,0 +1,41 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+  <p>Неверный логин или пароль.</p>
+{% endif %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>У вашей учетной записи нет доступа к этой странице. Чтобы продолжить, пожалуйста, войдите в систему с учетной записью, имеющей доступ</p>
+  {% else %}
+    <p>Пожалуйста, войдите в систему, чтобы просмотреть эту страницу.</p>
+  {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}" class="form-row form-control-lg">
+{% csrf_token %}
+<table  class="table caption-top table-sm mt-5">
+
+<tr>
+  <td>{{ form.username.label_tag }}</td>
+  <td class="form-control">{{ form.username }}</td>
+</tr>
+
+<tr>
+  <td>{{ form.password.label_tag }}</td>
+  <td class="form-control">{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="login" class="btn btn-primary"/>
+<input type="hidden" name="next" value="{{ next }}" />
+
+<!--  {{ form.as_p }}-->
+</form>
+
+
+{# Assumes you setup the password_reset view in your URLconf #}
+
+{% endblock %}
